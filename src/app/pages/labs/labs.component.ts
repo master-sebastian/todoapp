@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common' //Agregarlo para versiones recientes para usar las directivas de control antiguas como el *ngFor
 
 @Component({
@@ -9,6 +9,9 @@ import { CommonModule } from '@angular/common' //Agregarlo para versiones recien
   styleUrl: './labs.component.css'
 })
 export class LabsComponent {
+
+  contador = signal(0);
+
   title = ' Estamos probando';
   programmingLanguages = [
     "Java",
@@ -24,6 +27,13 @@ export class LabsComponent {
   viewNameCourse(){
     alert(this.nameCourse);
   }
+
+  changeHandlerCounter(event: Event){
+    const input = event.target as HTMLInputElement;
+    const newValue = parseInt(input.value);
+    this.contador.set(newValue); //Mas esficiente usar signal
+  }
+  
   
   viewNameCoursex2(){
     alert(this.nameCourse.repeat(2));

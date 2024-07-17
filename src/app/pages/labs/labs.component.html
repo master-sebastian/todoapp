@@ -19,8 +19,8 @@
 <button type="button" (click)="viewNameCourse()">Ver nombre del curso</button>
 <br>
 <button type="button" (dblclick)="viewNameCoursex2()">Entre pues</button>
-
-<input type="text" [value]="nameCourse" (change)="changeHandlerNameCourse($event)" placeholder="Ingrese nombre del curso">
+<h1>Contador: {{ contador() }}</h1>
+<input type="text" [value]="contador()" (change)="changeHandlerCounter($event)" placeholder="Ingrese nombre del curso">
 <input type="text" [value]="nameCourse" (keyup)="changeHandlerNameCourse($event)" placeholder="Ingrese nombre del curso">
 <input type="text" [value]="nameCourse" (keyup.shift)="changeHandlerNameCourse($event)" placeholder="Ingrese nombre del curso">
 <input type="text" [value]="nameCourse" (keydown.shift.t)="changeHandlerNameCourse($event)" placeholder="Ingrese nombre del curso">
