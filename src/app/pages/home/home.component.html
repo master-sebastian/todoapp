@@ -17,9 +17,9 @@
                     No hay tareas registradas
                 </h1>
             </ng-template>
-            
-            <pre>
-                <code>
+            <pre [ngSwitch]="tasks().length">
+                <div *ngSwitchCase="0"></div>
+                <code *ngSwitchDefault>
                     {{ tasks() | json }}
                 </code>
             </pre>
