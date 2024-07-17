@@ -18,10 +18,10 @@
                     </div>
                     <input class="edit" value="Learn JavaScript" />
                 </li>
-                <li *ngFor="let task of tasks()">
+                <li *ngFor="let task of tasks(); index as i">
                     <div class="view">
                         <input class="toggle" type="checkbox" />
-                        <label> {{ task }}</label>
+                        <label> {{ (i + 1)+ " - "+ task }}</label>
                         <button class="destroy"></button>
                     </div>
                     <input class="edit" value="Buy a unicorn" />
