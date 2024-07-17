@@ -20,4 +20,17 @@ export class LabsComponent {
   nameCourse = "";
 
   private ID = 31233; //Propiedades privadas solo accesibles desde la clase
+
+  viewNameCourse(){
+    alert(this.nameCourse);
+  }
+  
+  viewNameCoursex2(){
+    alert(this.nameCourse.repeat(2));
+  }
+
+  changeHandlerNameCourse(event: Event){
+    const input = event.target as HTMLInputElement;
+    this.nameCourse = input.value;
+  }
 }

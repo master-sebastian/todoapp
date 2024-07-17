@@ -9,6 +9,18 @@
 <!-- string interpolation -->
 {{ "Prueba \t".repeat(4) }}
 <br>
-
+<h1>{{nameCourse}}</h1>
+<hr>
 <!-- Property Binding  - Vinculación de propiedad -->
 <input type="text" [value]="nameCourse" placeholder="Ingrese nombre del curso">
+
+<!-- Event Binding click - double click - keydown keyup -->
+<br>
+<button type="button" (click)="viewNameCourse()">Ver nombre del curso</button>
+<br>
+<button type="button" (dblclick)="viewNameCoursex2()">Entre pues</button>
+
+<input type="text" [value]="nameCourse" (change)="changeHandlerNameCourse($event)" placeholder="Ingrese nombre del curso">
+<input type="text" [value]="nameCourse" (keyup)="changeHandlerNameCourse($event)" placeholder="Ingrese nombre del curso">
+<input type="text" [value]="nameCourse" (keyup.shift)="changeHandlerNameCourse($event)" placeholder="Ingrese nombre del curso">
+<input type="text" [value]="nameCourse" (keydown.shift.t)="changeHandlerNameCourse($event)" placeholder="Ingrese nombre del curso">
