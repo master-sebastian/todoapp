@@ -34,7 +34,6 @@ export class LabsComponent {
     this.contador.set(newValue); //Mas esficiente usar signal
   }
   
-  
   viewNameCoursex2(){
     alert(this.nameCourse.repeat(2));
   }

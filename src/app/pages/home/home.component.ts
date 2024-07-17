@@ -13,5 +13,18 @@ export class HomeComponent {
   "Ir a la plaza hacer mercado",
   "Ir a la cita medica",
   "Visitar a la familia"
- ])
+ ]);
+
+ text = signal("");
+
+ addHandlerItem(event: Event){
+  const input = event.target as HTMLInputElement;
+  const newValue = input.value;
+  this.tasks.update((tasks)=>[...tasks, newValue]); // Se crea un nuevo estado para seguir el patron de no mutar se agrega al final de la lista este nuevo elemento
+  input.value = ""
+  this.text.set(newValue)
+}
+  deleteTask(index: number){
+    this.tasks.update((tasks) => tasks.filter((task, pos) => pos !== index))
+  }
 }
