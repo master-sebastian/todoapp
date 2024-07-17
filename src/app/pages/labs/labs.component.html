@@ -1,1 +1,14 @@
-<p>labs works! Labs</p>
+<p>labs works! Labs - {{ title }}</p>
+
+<ul>
+    <li *ngFor="let programmingLanguage of programmingLanguages">
+        {{ programmingLanguage}}
+    </li>
+    <hr>
+</ul>
+<!-- string interpolation -->
+{{ "Prueba \t".repeat(4) }}
+<br>
+
+<!-- Property Binding  - Vinculación de propiedad -->
+<input type="text" [value]="nameCourse" placeholder="Ingrese nombre del curso">
