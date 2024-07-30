@@ -1,11 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common' //Agregarlo para versiones recientes para usar las directivas de control antiguas como el *ngFor
 import { Task } from '../../models/task.model';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms'; //Implementar formularios reactivos
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -28,20 +29,23 @@ export class HomeComponent {
   }
  ]);
 
- text = signal("");
+ text = new FormControl("", {
+  nonNullable: true,
+  validators: [
+    Validators.required
+  ]
+ });
 
- addHandlerItem(event: Event){
-  const input = event.target as HTMLInputElement;
-  const newValue = input.value;
-  if(newValue != ""){
+ addHandlerItem(){
+  const newValue = this.text.value;
+  if(this.text.valid && newValue.trim() != ""){
     const newItem = {
       id: Date.now(),
       title: newValue,
       completed: false
     };
     this.tasks.update((tasks)=>[...tasks, newItem]); // Se crea un nuevo estado para seguir el patron de no mutar se agrega al final de la lista este nuevo elemento
-    input.value = ""
-    this.text.set(newValue)
+    this.text.setValue("")
   }
 }
   deleteTask(index: number){

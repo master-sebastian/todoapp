@@ -2,8 +2,8 @@
     <header class="header">
         <div class="container">
             <h1>My Day</h1>
-            <p>All my tasks in one place {{ text() }}</p>
-            <input class="new-todo" placeholder="Type new todo" autofocus type="text" (keyup.enter)="addHandlerItem($event)"/>
+            <p>All my tasks in one place {{ text.value }}</p>
+            <input class="new-todo" [formControl]="text" placeholder="Type new todo" autofocus type="text" (keyup.enter)="addHandlerItem()"/>
         </div>
     </header>
     <div class="container todoapp-wrapper">
@@ -17,7 +17,7 @@
                     No hay tareas registradas
                 </h1>
             </ng-template>
-            <pre [ngSwitch]="tasks().length">
+            <pre [ngSwitch]="tasks().length" *ngIf="false">
                 <div *ngSwitchCase="0"></div>
                 <code *ngSwitchDefault>
                     {{ tasks() | json }}
