@@ -24,3 +24,19 @@
 <input type="text" [value]="nameCourse" (keyup)="changeHandlerNameCourse($event)" placeholder="Ingrese nombre del curso">
 <input type="text" [value]="nameCourse" (keyup.shift)="changeHandlerNameCourse($event)" placeholder="Ingrese nombre del curso">
 <input type="text" [value]="nameCourse" (keydown.shift.t)="changeHandlerNameCourse($event)" placeholder="Ingrese nombre del curso">
+
+<br>
+
+<input type="color" [formControl]="colorControl">
+<p>{{colorControl.value}}</p>
+
+
+<svg>
+    <g>
+        <rect x="0" y="0" height="100" width="100" [attr.fill]="colorControl.value"/>
+    </g>
+</svg>
+
+<hr>
+<input type="number" [formControl]="anchoControl">
+<span class="box" [style.width.px]="anchoControl.value" [style.backgroundColor]="colorControl.value"></span>
