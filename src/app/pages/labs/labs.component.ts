@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common' //Agregarlo para versiones recientes para usar las directivas de control antiguas como el *ngFor
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-labs',
@@ -24,7 +24,13 @@ export class LabsComponent {
   nameCourse = "";
 
   colorControl = new FormControl("#000000");
-  anchoControl = new FormControl("10");
+  anchoControl = new FormControl("10", {
+    validators: [
+      Validators.required,
+      //Validators.minLength(2),
+      Validators.min(10),
+    ]
+  });
 
   private ID = 31233; //Propiedades privadas solo accesibles desde la clase
 

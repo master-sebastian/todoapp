@@ -36,7 +36,10 @@
         <rect x="0" y="0" height="100" width="100" [attr.fill]="colorControl.value"/>
     </g>
 </svg>
-
+touched nos permite saber si el campo fue usado cuando se cambia el foco
+{{anchoControl.touched}}
 <hr>
-<input type="number" [formControl]="anchoControl">
+{{anchoControl.invalid}}
+<input type="number" [formControl]="anchoControl" [class.error_show]="anchoControl.invalid && anchoControl.touched">
+{{anchoControl.value}}
 <span class="box" [style.width.px]="anchoControl.value" [style.backgroundColor]="colorControl.value"></span>
