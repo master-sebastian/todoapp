@@ -34,13 +34,13 @@
                     <input class="edit" value="Learn JavaScript" />
                 </li>
                 -->
-                <li *ngFor="let task of tasks(); index as i">
+                <li (dblclick)="updateTaskEditingHtML(i, $event)" [class.editing]="task.editing" *ngFor="let task of tasks(); index as i" [class.completed]="task.completed">
                     <div class="view">
                         <input class="toggle" type="checkbox" [checked]="task.completed" (change)="updateTask(i)" />
                         <label> {{ (i + 1)+ " - "+ task.title }}</label>
                         <button class="destroy" (click)="deleteTask(i)"></button>
                     </div>
-                    <input class="edit" value="Buy a unicorn" />
+                    <input class="edit" [value]="task.title" (keyup.enter)="updateTaskEditingInput(i, $event)"/>
                 </li>
                 <!--
                 <li class="editing">
