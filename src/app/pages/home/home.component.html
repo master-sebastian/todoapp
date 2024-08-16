@@ -10,7 +10,7 @@
         <!-- This section should be hidden by default and shown when there are todos -->
         <section class="main">
             <h1 *ngIf="tasks().length > 0; else elsetasks" style="text-align: center;">
-                Cantidad de tareas: {{ tasks().length }}
+                Cantidad de tareas: {{ filterTask().length }}
             </h1>
             <ng-template #elsetasks>
                 <h1 style="text-align: center;">
@@ -57,17 +57,17 @@
         <!-- This footer should be hidden by default and shown when there are todos -->
         <footer class="footer">
             <!-- This should be `0 items left` by default -->
-            <span class="todo-count"><strong>{{ filterTask().length }}</strong> {{ filterTask().length > 0 ? "items":"item" }}  left</span>
+            <span class="todo-count"><strong>{{ filterTask().length }}</strong> {{ filterTask().length == 1 ? "item":"items" }}  left</span>
             <!-- Remove this if you don't implement routing -->
             <ul class="filters">
                 <li>
-                    <a (click)="changeFilter('All')" class="selected">All</a>
+                    <a (click)="changeFilter('All')" [class.selected]="filter() == 'All'">All</a>
                 </li>
                 <li>
-                    <a (click)="changeFilter('Pending')">Pending</a>
+                    <a (click)="changeFilter('Pending')" [class.selected]="filter() == 'Pending'">Pending</a>
                 </li>
                 <li>
-                    <a (click)="changeFilter('Completed')">Completed</a>
+                    <a (click)="changeFilter('Completed')" [class.selected]="filter() == 'Completed'">Completed</a>
                 </li>
             </ul>
             <!-- Hidden if no completed items are left ↓ -->
