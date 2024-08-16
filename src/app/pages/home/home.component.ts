@@ -22,34 +22,34 @@ export class HomeComponent {
 
   filter = signal<'All' | 'Pending' | 'Completed'>("All")
 
-  injector = inject(Injector); 
+  injector = inject(Injector);
 
-  ngOnInit(){
-     const storage = localStorage.getItem("tasks");
-     if(storage){
+  ngOnInit() {
+    const storage = localStorage.getItem("tasks");
+    if (storage) {
       const tasks = JSON.parse(storage);
       this.tasks.set(tasks);
-     }
-     this.trackTasks();
+    }
+    this.trackTasks();
   }
 
-  trackTasks(){
-    effect(()=>{
+  trackTasks() {
+    effect(() => {
       const tasks = this.tasks();
       localStorage.setItem("tasks", JSON.stringify(tasks));
 
-    }, {injector: this.injector})
+    }, { injector: this.injector })
   }
 
-  filterTask = computed(()=>{
+  filterTask = computed(() => {
     const filter = this.filter();
     const tasks = this.tasks();
 
-    if(filter == 'Pending'){
-      return tasks.filter((task)=>!task.completed)
+    if (filter == 'Pending') {
+      return tasks.filter((task) => !task.completed)
     }
-    if(filter == 'Completed'){
-      return tasks.filter((task)=> task.completed)
+    if (filter == 'Completed') {
+      return tasks.filter((task) => task.completed)
     }
     return tasks
   })
@@ -113,7 +113,7 @@ export class HomeComponent {
     }))
   }
 
-  changeFilter(filter: 'All' | 'Pending' | 'Completed'){
+  changeFilter(filter: 'All' | 'Pending' | 'Completed') {
     this.filter.set(filter);
   }
 }
