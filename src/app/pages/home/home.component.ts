@@ -1,4 +1,4 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, effect, inject, Inject, Injector } from '@angular/core';
 import { CommonModule } from '@angular/common' //Agregarlo para versiones recientes para usar las directivas de control antiguas como el *ngFor
 import { Task } from '../../models/task.model';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms'; //Implementar formularios reactivos
@@ -11,23 +11,7 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms'; /
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-  tasks = signal<Task[]>([
-    {
-      id: Date.now(),
-      title: "Ir a la plaza hacer mercado",
-      completed: false
-    },
-    {
-      id: Date.now(),
-      title: "Ir a la cita medica",
-      completed: false
-    },
-    {
-      id: Date.now(),
-      title: "Visitar a la familia",
-      completed: false
-    }
-  ]);
+  tasks = signal<Task[]>([]);
 
   text = new FormControl("", {
     nonNullable: true,
@@ -38,6 +22,24 @@ export class HomeComponent {
 
   filter = signal<'All' | 'Pending' | 'Completed'>("All")
 
+  injector = inject(Injector); 
+
+  ngOnInit(){
+     const storage = localStorage.getItem("tasks");
+     if(storage){
+      const tasks = JSON.parse(storage);
+      this.tasks.set(tasks);
+     }
+     this.trackTasks();
+  }
+
+  trackTasks(){
+    effect(()=>{
+      const tasks = this.tasks();
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+
+    }, {injector: this.injector})
+  }
 
   filterTask = computed(()=>{
     const filter = this.filter();
