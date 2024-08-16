@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common' //Agregarlo para versiones recientes para usar las directivas de control antiguas como el *ngFor
 import { Task } from '../../models/task.model';
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms'; //Implementar formularios reactivos
@@ -11,52 +11,67 @@ import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms'; /
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
- tasks = signal<Task[]>([
-  {
-    id: Date.now(),
-    title: "Ir a la plaza hacer mercado",
-    completed: false  
-  },
-  {
-    id: Date.now(),
-    title: "Ir a la cita medica",
-    completed: false  
-  },
-  {
-    id: Date.now(),
-    title: "Visitar a la familia",
-    completed: false  
-  }
- ]);
-
- text = new FormControl("", {
-  nonNullable: true,
-  validators: [
-    Validators.required
-  ]
- });
-
- addHandlerItem(){
-  const newValue = this.text.value;
-  if(this.text.valid && newValue.trim() != ""){
-    const newItem = {
+  tasks = signal<Task[]>([
+    {
       id: Date.now(),
-      title: newValue,
+      title: "Ir a la plaza hacer mercado",
       completed: false
-    };
-    this.tasks.update((tasks)=>[...tasks, newItem]); // Se crea un nuevo estado para seguir el patron de no mutar se agrega al final de la lista este nuevo elemento
-    this.text.setValue("")
+    },
+    {
+      id: Date.now(),
+      title: "Ir a la cita medica",
+      completed: false
+    },
+    {
+      id: Date.now(),
+      title: "Visitar a la familia",
+      completed: false
+    }
+  ]);
+
+  text = new FormControl("", {
+    nonNullable: true,
+    validators: [
+      Validators.required
+    ]
+  });
+
+  filter = signal<'All' | 'Pending' | 'Completed'>("All")
+
+
+  filterTask = computed(()=>{
+    const filter = this.filter();
+    const tasks = this.tasks();
+
+    if(filter == 'Pending'){
+      return tasks.filter((task)=>!task.completed)
+    }
+    if(filter == 'Completed'){
+      return tasks.filter((task)=> task.completed)
+    }
+    return tasks
+  })
+
+  addHandlerItem() {
+    const newValue = this.text.value;
+    if (this.text.valid && newValue.trim() != "") {
+      const newItem = {
+        id: Date.now(),
+        title: newValue,
+        completed: false
+      };
+      this.tasks.update((tasks) => [...tasks, newItem]); // Se crea un nuevo estado para seguir el patron de no mutar se agrega al final de la lista este nuevo elemento
+      this.text.setValue("")
+    }
   }
-}
-  deleteTask(index: number){
+  deleteTask(index: number) {
     this.tasks.update((tasks) => tasks.filter((task, pos) => pos !== index))
   }
 
-  updateTask(index: number)
-  {
+  updateTask(index: number) {
     this.tasks.update((tasks) => {
       return tasks.map((task, pos) => {
-        if(pos === index){
+        if (pos === index) {
           return {
             ...task,
             completed: !task.completed
@@ -67,32 +82,36 @@ export class HomeComponent {
     })
   }
 
-  updateTaskEditingHtML(index: number){
+  updateTaskEditingHtML(index: number) {
     this.tasks.update(prevState => prevState.map((task, pos) => {
-      if(pos === index){
+      if (pos === index) {
         return {
           ...task,
           editing: true
         }
-      }else{
+      } else {
         return task
       }
     }))
   }
 
-  updateTaskEditingInput(index: number, event: Event){
+  updateTaskEditingInput(index: number, event: Event) {
     const input = event.target as HTMLInputElement;
     console.log(input.value)
     this.tasks.update(prevState => prevState.map((task, pos) => {
-      if(pos === index){
+      if (pos === index) {
         return {
           ...task,
           title: input.value,
           editing: false
         }
-      }else{
+      } else {
         return task
       }
     }))
+  }
+
+  changeFilter(filter: 'All' | 'Pending' | 'Completed'){
+    this.filter.set(filter);
   }
 }
